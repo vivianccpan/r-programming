@@ -1,4 +1,5 @@
 
+
 ## R Programming Quiz 1, Q11:
 #load quiz data
 getwd()
@@ -18,27 +19,36 @@ tail(data,2)
 data[47,]$Ozone
 data$Ozone[47]
 
-
-bad<- is.na(data$Ozone)
-complete.cases(is.na(data$Ozone))
-data[bad]
-data[!bad]
+# Q16. How many missing values are in the Ozone column of this data frame?
 sum(as.numeric(is.na(data$Ozone) ))
+
+ozone_data <- data[,1]
+length(ozone_data[is.na(ozone_data)])
+# Q17 Question 17 What is the mean of the Ozone column in this dataset? Exclude missing values (coded as NA) from this calculation.
 mean(data$Ozone)
-newdf <- data[complete.cases(data$Ozone),]
-dim(newdf) 
+newdf <- data[complete.cases(data$Ozone),] 
 mean(newdf$Ozone)
-#Extract the subset of rows of the data frame where Ozone values are above 31 and Temp values are above 90. What is the mean of Solar.R in this subset
+        
+ozone_clean <- ozone_data[!is.na(ozone_data)]
+mean(ozone_clean)
+
+
+# Q18 Extract the subset of rows of the data frame where Ozone values are above 31 and Temp values are above 90. What is the mean of Solar.R in this subset
 df1 <- data[data$Ozone > 31,] 
 df2 <- df1[df1$Temp > 90,] 
 is.na(df2$Solar.R)
- 
 newdf2 <- df2[complete.cases(df2$Solar.R),]
 mean(newdf2$Solar.R)
-#What is the mean of "Temp" when "Month" is equal to 6?
+
+mean(na.omit(df2)$Solar.R) 
+# Q 19 What is the mean of "Temp" when "Month" is equal to 6?
 df3 <- data[data$Month == 6,]
 is.na(data[data$Month == 6,])
 mean(df3$Temp)
-#What was the maximum ozone value in the month of May (i.e. Month is equal to 5)?
+# Q 20 What was the maximum ozone value in the month of May (i.e. Month is equal to 5)?
 df4 <- data[data$Month == 5,]
 max(df4$Ozone,na.rm = TRUE)
+
+data.May <- data[data$Month == 5, , drop = FALSE]
+data.May_ <- na.omit(data.May)
+max(data.May_$Ozone)
